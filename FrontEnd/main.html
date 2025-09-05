@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Image Processing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Image Enhancement System</h1>
+        <p>Improve your images using advanced techniques: Equalization, Gaussian Blur, Laplace Filter, and Color Space
+            adjustments — for clearer, sharper, and more vibrant results.<br><b>Enhance your images like never
+                before!</b>
+        </p>
+        <label class="switch">
+            <input id="input" type="checkbox" />
+            <div class="slider round">
+                <div class="sun-moon">
+                    <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+
+                    <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                    <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </svg>
+                </div>
+                <div class="stars">
+                    <svg id="star-1" class="star" viewBox="0 0 20 20">
+                        <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z">
+                        </path>
+                    </svg>
+                    <svg id="star-2" class="star" viewBox="0 0 20 20">
+                        <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z">
+                        </path>
+                    </svg>
+                    <svg id="star-3" class="star" viewBox="0 0 20 20">
+                        <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z">
+                        </path>
+                    </svg>
+                    <svg id="star-4" class="star" viewBox="0 0 20 20">
+                        <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </label>
+    </header>
+
+    <main>
+        <!--    <section id="upload-section">-->
+        <!--        <h2>Upload Image</h2>-->
+        <!--        <div class="upload-container">-->
+        <!--            <button id="upload-btn" class="btn">Choose an Image</button>-->
+        <!--            <input type="file" id="image-input" accept="image/*">-->
+        <!--            <p id="file-name">No file chosen</p>-->
+        <!--        </div>-->
+        <!--    </section>-->
+
+        <section id="upload-section">
+            <h2>Upload Image</h2>
+            <div class="upload-container">
+                <button id="upload-btn" class="btn">Choose an Image</button>
+                <input type="file" id="image-input" accept="image/*">
+                <p id="file-name"></p>
+            </div>
+        </section>
+
+        <section id="original-image-section" class="hidden">
+            <h2>Original Image</h2>
+            <div class="image-container">
+                <img id="original-image" alt="Original Image">
+                <div class="loader hidden"></div>
+            </div>
+            <div class="button-container">
+                <!-- <button id="process-btn" class="btn action-btn">Process Image</button> -->
+                <!-- From Uiverse.io by 00Kubi -->
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input name="radio" type="radio" class="boost-contrast" />
+                        <span class="name">Boost Contrast</span>
+                    </label>
+                    <label class="radio">
+                        <input name="radio" type="radio" class="smooth-soften" />
+                        <span class="name">Smooth & Soften</span>
+                    </label>
+                    <label class="radio">
+                        <input name="radio" type="radio" class="edge-sharpen" />
+                        <span class="name">Edge Sharpen</span>
+                    </label>
+                    <label class="radio">
+                        <input name="radio" type="radio" class="color-pop" />
+                        <span class="name">Color Pop</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section id="boost-contrast-section" class="hidden">
+            <h2>Boost Contrast Results</h2>
+            <div class="techniques-container">
+                <div class="technique">
+                    <h3>Histogram Equalization</h3>
+                    <div class="image-container">
+                        <img id="boost-contrast-image" alt="Boost Contrast Result">
+                        <div class="loader hidden"></div>
+                    </div>
+                    <button id="download-boost-contrast" class="download-button">
+                        <div class="docs">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Download Image
+                        </div>
+                        <div class="download">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="smooth-soften-section" class="hidden">
+            <h2>Smooth & Soften Results</h2>
+            <div class="techniques-container">
+                <div class="technique">
+                    <h3>Gaussian Blur</h3>
+                    <div class="image-container">
+                        <img id="smooth-soften-image" alt="Smooth & Soften Result">
+                        <div class="loader hidden"></div>
+                    </div>
+                    <button id="download-smooth-soften" class="download-button">
+                        <div class="docs">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Download Image
+                        </div>
+                        <div class="download">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="edge-sharpen-section" class="hidden">
+            <h2>Edge Sharpen Results</h2>
+            <div class="techniques-container">
+                <div class="technique">
+                    <h3>Laplacian Filter</h3>
+                    <div class="image-container">
+                        <img id="edge-sharpen-image" alt="Edge Sharpen Result">
+                        <div class="loader hidden"></div>
+                    </div>
+                    <button id="download-edge-sharpen" class="download-button">
+                        <div class="docs">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Download Image
+                        </div>
+                        <div class="download">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="color-pop-section" class="hidden">
+            <h2>Color Pop Results</h2>
+            <div class="techniques-container">
+                <div class="technique">
+                    <h3>Color Space Enhancement</h3>
+                    <div class="image-container">
+                        <img id="color-pop-image" alt="Color Pop Result">
+                        <div class="loader hidden"></div>
+                    </div>
+                    <button id="download-color-pop" class="download-button">
+                        <div class="docs">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Download Image
+                        </div>
+                        <div class="download">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="processing-section" class="hidden">
+            <div class="tabs">
+                <!-- <button class="tab-btn active" data-tab="enhancement">Enhancement</button> -->
+                <!--             <button class="tab-btn" data-tab="identification">Plant Identification</button> -->
+                <!--             <button class="tab-btn" data-tab="final">Final Results</button> -->
+            </div>
+
+            <div id="enhancement" class="tab-content active">
+                <h2>Image Enhancement</h2>
+                <div class="techniques-container">
+                    <div class="technique">
+                        <h3>Histogram Equalization</h3>
+                        <div class="image-container">
+                            <img id="enhanced-image1" alt="Histogram Equalization">
+                            <div class="loader hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="technique">
+                        <h3>Noise Reduction</h3>
+                        <div class="image-container">
+                            <img id="enhanced-image2" alt="Noise Reduction">
+                            <div class="loader hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="technique">
+                        <h3>Edge Enhancement</h3>
+                        <div class="image-container">
+                            <img id="enhanced-image3" alt="Edge Enhancement">
+                            <div class="loader hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="technique">
+                        <h3>Color Space Enhancement</h3>
+                        <div class="image-container">
+                            <img id="enhanced-image4" alt="Color Space Enhancement">
+                            <div class="loader hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="identification" class="tab-content">
+                <h2>Plant Identification</h2>
+                <div class="identification-container">
+                    <div class="image-container">
+                        <img id="plant-image" alt="Plant Image">
+                        <div class="loader hidden"></div>
+                    </div>
+                    <div id="plant-info" class="hidden">
+                        <h3>Identified Plant:</h3>
+                        <p id="plant-name">Loading identification results...</p>
+                        <p id="plant-confidence">Confidence: <span id="confidence-value">0</span>%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="final" class="tab-content">
+                <h2>Final Results</h2>
+                <div class="final-container">
+                    <div class="final-row">
+                        <div class="final-item">
+                            <h3>Original Image</h3>
+                            <div class="image-container">
+                                <img id="final-original" alt="Original Image">
+                                <div class="loader hidden"></div>
+                            </div>
+                        </div>
+                        <div class="final-item">
+                            <h3>Identified Plant</h3>
+                            <div id="final-plant-info">
+                                <p id="final-plant-name">Not identified yet</p>
+                                <p>Confidence: <span id="final-confidence-value">0</span>%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="final-row">
+                        <div class="final-item">
+                            <h3>Histogram Equalization</h3>
+                            <p>Histogram Equalization</p>
+                            <div class="image-container">
+                                <img id="final-enhanced1" alt="Histogram Equalization">
+                                <div class="loader hidden"></div>
+                            </div>
+                        </div>
+                        <div class="final-item">
+                            <h3>Noise Reduction</h3>
+                            <p>Gaussian Blur</p>
+                            <div class="image-container">
+                                <img id="final-enhanced2" alt="Noise Reduction">
+                                <div class="loader hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="final-row">
+                        <div class="final-item">
+                            <h3>Edge Enhancement</h3>
+                            <!--                        //////////////////////////////////////////-->
+                            <p>Laplacian filter</p>
+                            <!--                        /////////////////////////////////////////////-->
+                            <div class="image-container">
+                                <img id="final-enhanced3" alt="Edge Enhancement">
+                                <div class="loader hidden"></div>
+                            </div>
+                        </div>
+                        <div class="final-item">
+                            <h3>Color Space Enhancement</h3>
+                            <p>Color Space Enhancement</p>
+                            <div class="image-container">
+                                <img id="final-enhanced4" alt="Color Space Enhancement">
+                                <div class="loader hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Adding a new button with unique class to avoid CSS conflicts -->
+    <div class="floating-button-container">
+        <button class="floating-button">
+            <p class="floating-button__text">
+                <span style="--index: 0;">T</span>
+                <span style="--index: 1;">R</span>
+                <span style="--index: 2;">Y</span>
+                <span style="--index: 3;"></span>
+                <span style="--index: 4;">A</span>
+                <span style="--index: 5;">N</span>
+                <span style="--index: 6;">O</span>
+                <span style="--index: 7;">T</span>
+                <span style="--index: 8;">H</span>
+                <span style="--index: 9;">E</span>
+                <span style="--index: 10;">R</span>
+                <span style="--index: 11;"> </span>
+                <span style="--index: 12;">I</span>
+                <span style="--index: 13;">M</span>
+                <span style="--index: 14;">A</span>
+                <span style="--index: 15;">G</span>
+                <span style="--index: 16;">E</span>
+            </p>
+
+            <div class="floating-button__circle">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="floating-button__icon">
+                    <path d="M12 2v2a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z" fill="currentColor" />
+                    <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <footer>
+        <p>-- Digital Image Processing --<br> -Semester Project-</p>
+    </footer>
+    <script src="script.js"></script>
+    
+</body>
+
+</html>
