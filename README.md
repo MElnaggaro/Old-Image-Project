@@ -71,12 +71,6 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ---
 
-## 📄 License
-
-[MIT](LICENSE)
-
----
-
 ## 💡 Inspiration
 
 This project was inspired by the desire to preserve memories and make old photos look new again.
